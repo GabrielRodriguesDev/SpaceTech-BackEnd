@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using SpaceTech.Domain.Commands.User;
 using SpaceTech.Domain.Interfaces.Services;
 using SpaceTech.Infrastructure.Errors;
