@@ -17,4 +17,11 @@ public class User : BaseEntity
         Email = command.Email;
         Password = BCrypt.Net.BCrypt.HashPassword(command.Password);
     }
+
+    public void Update(UpdateUserCommand command)
+    {
+        Name = command.Name!;
+        Surname = command.Surname!;
+        Email = command.Email;
+    }
 }

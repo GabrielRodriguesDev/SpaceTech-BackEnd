@@ -50,5 +50,43 @@ public class UserService : IUserService
             Surname = user.Surname,
             Email = user.Email
         });
-    }    
+    }
+
+    public GenericCommandResult Update(UpdateUserCommand command, CancellationToken cancellationToken)
+    {
+        command.Validate();
+        if (command.Invalid) return new GenericCommandResult(false, "Ops! Something went wrong.", command.Notifications);
+
+        var user = _userRepository.Get(command.Id!.Value);
+        if (user is null) return new GenericCommandResult(false, "Sorry, user not found.");
+
+        if(user.Email != command.Email)
+        {
+            var existsByEmail = _userRepository.ThereIsUserByEmail(command.Email);
+            if (existsByEmail) return new GenericCommandResult(false, "Please, This is already a record associated with this email.");
+        }
+
+        user.Update(command);
+
+        _uow.BeginTransaction();
+
+        try
+        {
+            _userRepository.Update(user);
+            _uow.Commit();
+        }
+        catch (Exception)
+        {
+            _uow.Rollback();
+            throw;
+        }
+
+        return new GenericCommandResult(true, "User changed successfully.", new UserCommandResult()
+        {
+            Id = user.Id,
+            Name = user.Name,
+            Surname = user.Surname,
+            Email = user.Email
+        });
+    }
 }

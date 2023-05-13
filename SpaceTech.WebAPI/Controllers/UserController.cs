@@ -25,5 +25,20 @@ public class UserController : ControllerBase
 
         return await tsc.Task;
     }
+
+    [HttpPut]
+    public async Task<IActionResult> Update([FromServices] IUserService service, [FromBody] UpdateUserCommand body, CancellationToken cancellationToken)
+    {
+        ErrorCatalogHelper.SettingCatalogedError(HttpContext, ErrorCatalog.UpdateUser);
+
+        var tsc = new TaskCompletionSource<IActionResult>();
+        var result = service.Update(body, cancellationToken);
+        tsc.SetResult(new JsonResult(result)
+        {
+            StatusCode = 200
+        });
+
+        return await tsc.Task;
+    }
 }
 

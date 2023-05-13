@@ -2,19 +2,22 @@
 using SpaceTech.Domain.Notifications;
 
 namespace SpaceTech.Domain.Commands.User;
-public class CreateUserCommand : Notificable
+public class UpdateUserCommand : Notificable
 {
+    public Guid? Id { get; set; }
     public string? Name { get; set; } = null!;
     public string? Surname { get; set; }
-    public string? Password { get; set; }
-    public string? ConfirmPassword { get; set; }
     public string Email { get; set; } = null!;
 
     public override void Validate()
     {
+        if(Id is null)
+        {
+            this.AddNotification("Id", "Inform the Id.");
+        }
         if (String.IsNullOrEmpty(Name))
         {
-            this.AddNotification("Name", "inform the name.");
+            this.AddNotification("Name", "Inform the name.");
         }
         else
         {
@@ -26,7 +29,7 @@ public class CreateUserCommand : Notificable
 
         if (String.IsNullOrEmpty(Surname))
         {
-            this.AddNotification("Surname", "Inform the surname.");
+            this.AddNotification("Surname", "inform the surname.");
         }
         else
         {
@@ -45,31 +48,6 @@ public class CreateUserCommand : Notificable
             if (Email.Length > 120)
             {
                 this.AddNotification("Email", "The email can only contain up to 220 characters.");
-            }
-        }
-
-        if (String.IsNullOrWhiteSpace(Password))
-        {
-            this.AddNotification("Password", "Enter your Password.");
-        }
-        else
-        {
-            var resultPassword = InformationValidationHelper.PasswordIsValid(Password);
-            if (!String.IsNullOrEmpty(resultPassword))
-            {
-                this.AddNotification("Password", resultPassword.Replace("@", " " + Environment.NewLine + " "));
-            }
-        }
-
-        if (String.IsNullOrWhiteSpace(ConfirmPassword))
-        {
-            this.AddNotification("ConfirmPassword", "Enter your password confirmation.");
-        }
-        else
-        {
-            if (!Password!.Equals(ConfirmPassword))
-            {
-                this.AddNotification("ConfirmPassword", "Password confirmation does not match the password entered.");
             }
         }
 
