@@ -31,7 +31,8 @@ public class TokenService
         {
             new Claim(ClaimTypes.Name, authenticatedModel.Name),
             new Claim(ClaimTypes.Email, authenticatedModel.Email),
-            new Claim("Id", authenticatedModel.Id)
+            new Claim("Id", authenticatedModel.Id),
+            new Claim(ClaimTypes.Role, authenticatedModel.UserType.ToString())
         };
     }
 }

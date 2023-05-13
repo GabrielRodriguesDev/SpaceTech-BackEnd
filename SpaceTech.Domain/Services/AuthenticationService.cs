@@ -30,7 +30,8 @@ public class AuthenticationService : IAuthenticationService
         {
             Id = userDb.Id.ToString(),
             Name = userDb.Name,
-            Email = userDb.Email
+            Email = userDb.Email,
+            UserType = userDb.UserType
         });
     }
 }

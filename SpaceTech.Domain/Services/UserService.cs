@@ -52,6 +52,8 @@ public class UserService : IUserService
         });
     }
 
+
+
     public GenericCommandResult Update(UpdateUserCommand command, CancellationToken cancellationToken)
     {
         command.Validate();
@@ -88,5 +90,29 @@ public class UserService : IUserService
             Surname = user.Surname,
             Email = user.Email
         });
+    }
+
+    public GenericCommandResult Delete(Guid? Id, CancellationToken cancellationToken)
+    {
+        if (Id is null) return new GenericCommandResult(false, "Enter user Id.");
+
+        var user = _userRepository.Get(Id.Value);
+        if(user is null) return new GenericCommandResult(false, "User not found.");
+
+        _uow.BeginTransaction();
+
+        try
+        {
+            _userRepository.Delete(user.Id);
+            _uow.Commit();
+        }
+        catch (Exception)
+        {
+            _uow.Rollback();
+            throw;
+        }
+
+        return new GenericCommandResult(false, "User removed successfully.");
+
     }
 }

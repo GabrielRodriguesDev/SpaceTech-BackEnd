@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SpaceTech.Domain.Commands.User;
+using SpaceTech.Domain.Enums;
 using SpaceTech.Domain.Interfaces.Services;
 using SpaceTech.Infrastructure.Errors;
 using SpaceTech.WebAPI.Helpers;
@@ -33,6 +35,23 @@ public class UserController : ControllerBase
 
         var tsc = new TaskCompletionSource<IActionResult>();
         var result = service.Update(body, cancellationToken);
+        tsc.SetResult(new JsonResult(result)
+        {
+            StatusCode = 200
+        });
+
+        return await tsc.Task;
+    }
+
+    [HttpDelete]
+    [Route("{id}")]
+    [Authorize(Roles = nameof(UserType.Administrator))]
+    public async Task<IActionResult> Delete([FromServices] IUserService service, [FromRoute] Guid id, CancellationToken cancellationToken)
+    {
+        ErrorCatalogHelper.SettingCatalogedError(HttpContext, ErrorCatalog.UpdateUser);
+
+        var tsc = new TaskCompletionSource<IActionResult>();
+        var result = service.Delete(id, cancellationToken);
         tsc.SetResult(new JsonResult(result)
         {
             StatusCode = 200

@@ -6,5 +6,6 @@ public interface IUserService
 {
     GenericCommandResult Create(CreateUserCommand command, CancellationToken cancellationToken);
     GenericCommandResult Update(UpdateUserCommand command, CancellationToken cancellationToken);
+    GenericCommandResult Delete(Guid? Id, CancellationToken cancellationToken);
 
 }
