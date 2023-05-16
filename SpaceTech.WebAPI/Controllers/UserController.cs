@@ -2,7 +2,11 @@
 using Microsoft.AspNetCore.Mvc;
 using SpaceTech.Domain.Commands.User;
 using SpaceTech.Domain.Enums;
+using SpaceTech.Domain.Interfaces.Repository;
 using SpaceTech.Domain.Interfaces.Services;
+using SpaceTech.Domain.Queries;
+using SpaceTech.Domain.Queries.Params;
+using SpaceTech.Domain.Queries.Result;
 using SpaceTech.Infrastructure.Errors;
 using SpaceTech.WebAPI.Helpers;
 
@@ -43,12 +47,32 @@ public class UserController : ControllerBase
         return await tsc.Task;
     }
 
+    [HttpGet]
+    [Route("{id}")]
+    public async Task<IActionResult> Get([FromServices] IUserRepository repository, [FromRoute] Guid id, CancellationToken cancellationToken)
+    {
+        ErrorCatalogHelper.SettingCatalogedError(HttpContext, ErrorCatalog.GetUser);
+
+        var tsc = new TaskCompletionSource<IActionResult>();
+        var searchFormParams = new SearchFormParams();
+        searchFormParams.Id = id;
+        searchFormParams.TableName = "User";
+        searchFormParams.TableFields = BaseQueries.ExtractReturnFields<UserFormQueryResult>();
+        var result = repository.FormSearch(searchFormParams);
+        tsc.SetResult(new JsonResult(result)
+        {
+            StatusCode = 200
+        });
+
+        return await tsc.Task;
+    }
+
     [HttpDelete]
     [Route("{id}")]
     [Authorize(Roles = nameof(UserType.Administrator))]
     public async Task<IActionResult> Delete([FromServices] IUserService service, [FromRoute] Guid id, CancellationToken cancellationToken)
     {
-        ErrorCatalogHelper.SettingCatalogedError(HttpContext, ErrorCatalog.UpdateUser);
+        ErrorCatalogHelper.SettingCatalogedError(HttpContext, ErrorCatalog.DeleteUser);
 
         var tsc = new TaskCompletionSource<IActionResult>();
         var result = service.Delete(id, cancellationToken);
