@@ -10,4 +10,8 @@ public interface IUserRepository : IBaseRepository<User>
     User GetUserByEmail(string email);
 
     UserFormQueryResult FormSearch(SearchFormParams searchFormParams);
+
+    IEnumerable<UserListResult> Search(SearchParams searchParams);
+
+    int Totalizer(SearchParams searchParams);
 }

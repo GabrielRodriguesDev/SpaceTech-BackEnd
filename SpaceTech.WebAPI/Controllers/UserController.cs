@@ -4,6 +4,7 @@ using SpaceTech.Domain.Commands.User;
 using SpaceTech.Domain.Enums;
 using SpaceTech.Domain.Interfaces.Repository;
 using SpaceTech.Domain.Interfaces.Services;
+using SpaceTech.Domain.Models;
 using SpaceTech.Domain.Queries;
 using SpaceTech.Domain.Queries.Params;
 using SpaceTech.Domain.Queries.Result;
@@ -57,9 +58,29 @@ public class UserController : ControllerBase
         var searchFormParams = new SearchFormParams();
         searchFormParams.Id = id;
         searchFormParams.TableName = "User";
-        searchFormParams.TableFields = BaseQueries.ExtractReturnFields<UserFormQueryResult>();
+        searchFormParams.ReturnFields = BaseQueries.ExtractReturnFieldsForQuery<UserFormQueryResult>();
         var result = repository.FormSearch(searchFormParams);
         tsc.SetResult(new JsonResult(result)
+        {
+            StatusCode = 200
+        });
+
+        return await tsc.Task;
+    }
+
+    [HttpPost]
+    [Route("Search")]
+    public async Task<IActionResult> Search([FromServices] IUserRepository repository, [FromBody] SearchParams searchParams, CancellationToken cancellationToken)
+    {
+        ErrorCatalogHelper.SettingCatalogedError(HttpContext, ErrorCatalog.SearchUser);
+
+        var tsc = new TaskCompletionSource<IActionResult>();
+        searchParams.TableName = "User";
+        BaseQueries.ExtractReturnFieldsForSearch<UserListResult>(searchParams);
+        var result = repository.Search(searchParams);
+        var totalizer = repository.Totalizer(searchParams);
+        var response = new PaginatedAnswerModel<IEnumerable<UserListResult>>(searchParams.Take, searchParams.Skip, totalizer, result);
+        tsc.SetResult(new JsonResult(response)
         {
             StatusCode = 200
         });

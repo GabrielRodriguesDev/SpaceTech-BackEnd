@@ -28,4 +28,14 @@ public class UserRepository : BaseRepository<User>, IUserRepository
     {
        return _connection.QueryFirstOrDefault<UserFormQueryResult>(BaseQueries.SearchForm(searchFormParams), searchFormParams, _uow.CurrentTransaction());
     }
+
+    public IEnumerable<UserListResult> Search(SearchParams searchParams)
+    {
+        return _connection.Query<UserListResult>(BaseQueries.Search(searchParams), searchParams, _uow.CurrentTransaction());
+    }
+
+    public int Totalizer(SearchParams searchParams)
+    {
+        return _connection.QueryFirstOrDefault<int>(BaseQueries.Search(searchParams, true), searchParams, _uow.CurrentTransaction());
+    }
 }

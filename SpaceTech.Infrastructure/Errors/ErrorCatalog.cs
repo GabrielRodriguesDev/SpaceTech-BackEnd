@@ -8,6 +8,7 @@ public class ErrorCatalog
     public static string UpdateUser = "(SE0003)";
     public static string GetUser = "(SE0004)";
     public static string DeleteUser = "(SE0005)";
+    public static string SearchUser = "(SE0006)";
     #endregion
 
     #region Authentication
