@@ -85,6 +85,15 @@ public class BaseQueries
         }
 
         if(!totalizer) {
+            if(!String.IsNullOrEmpty(searchParams.Order))
+            {
+                sql.AppendLine($" ORDER BY {searchParams.Order} ");
+            }
+
+            if(searchParams.Take == 0)
+            {
+                searchParams.Take = 25;
+            }
             sql.AppendLine(" LIMIT @Take OFFSET @Skip ");
         }
 
