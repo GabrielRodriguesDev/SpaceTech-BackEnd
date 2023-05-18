@@ -50,5 +50,10 @@ public class InformationValidationHelper
         return result;
     }
 
+    public static bool PhoneIsValid(string phoneNumber)
+    {
+        string pattern = @"^\d{10}$";
+        return Regex.IsMatch(phoneNumber, pattern);
+    }
 
 }

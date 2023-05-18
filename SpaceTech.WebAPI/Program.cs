@@ -5,10 +5,7 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
-
 builder.Services.AddControllers();
-
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -59,12 +56,12 @@ builder.Services.AddAuthentication(options =>
 var app = builder.Build();
 
 app.UseSwagger();
+
 app.UseSwaggerUI(s =>
 {
     s.SwaggerEndpoint("/swagger/v1/swagger.json", "Documentação SpaceTech");
     s.RoutePrefix = "";
 });
-
 
 app.UseHttpsRedirection();
 

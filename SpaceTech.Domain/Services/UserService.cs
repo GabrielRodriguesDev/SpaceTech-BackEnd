@@ -52,8 +52,6 @@ public class UserService : IUserService
         });
     }
 
-
-
     public GenericCommandResult Update(UpdateUserCommand command, CancellationToken cancellationToken)
     {
         command.Validate();

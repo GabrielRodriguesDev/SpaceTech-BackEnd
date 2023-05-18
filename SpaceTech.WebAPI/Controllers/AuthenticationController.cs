@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using SpaceTech.Domain.Commands;
 using SpaceTech.Domain.Commands.Authentication;
 using SpaceTech.Domain.Interfaces.Services;
 using SpaceTech.Infrastructure.Errors;
@@ -24,6 +26,7 @@ public class AuthenticationController : ControllerBase
         {
             var token = TokenService.GenerateJwtToken(HttpContext, result.Authenticated!);
             result.Authenticated!.Token = token;
+            CookieHelper.SetCookie(Response, token);
         }
 
         tsc.SetResult(new JsonResult(result)
@@ -31,6 +34,20 @@ public class AuthenticationController : ControllerBase
             StatusCode = 200
         });
 
+        return await tsc.Task;
+    }
+
+    [HttpPost("Logout")]
+    [AllowAnonymous]
+    public async Task<IActionResult> Logout()
+    {
+        ErrorCatalogHelper.SettingCatalogedError(HttpContext, ErrorCatalog.Logout);
+        var tsc = new TaskCompletionSource<IActionResult>();
+        CookieHelper.ClearCookie(Response);
+        tsc.SetResult(new JsonResult(new GenericCommandResult(true, "Logged out successfully."))
+        {
+            StatusCode = 200
+        });
         return await tsc.Task;
     }
 }

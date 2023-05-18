@@ -9,6 +9,7 @@ public class User : BaseEntity
     public string Email { get; private set; } = null!;
     public string Password { get; private set; } = null!;
     public UserType UserType { get; private set; }
+    public string Telephone { get; private set; } = null!;
 
 
     public User() : base() { }
@@ -19,6 +20,7 @@ public class User : BaseEntity
         Email = command.Email;
         Password = BCrypt.Net.BCrypt.HashPassword(command.Password);
         UserType = UserType.Common;
+        Telephone = command.Telephone;
     }
 
     public void Update(UpdateUserCommand command)
@@ -26,5 +28,6 @@ public class User : BaseEntity
         Name = command.Name!;
         Surname = command.Surname!;
         Email = command.Email;
+        Telephone = command.Telephone;
     }
 }

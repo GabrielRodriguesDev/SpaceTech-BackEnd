@@ -8,6 +8,7 @@ public class UpdateUserCommand : Notificable
     public string? Name { get; set; } = null!;
     public string? Surname { get; set; }
     public string Email { get; set; } = null!;
+    public string Telephone { get; set; } = null!;
 
     public override void Validate()
     {
@@ -48,6 +49,18 @@ public class UpdateUserCommand : Notificable
             if (Email.Length > 120)
             {
                 this.AddNotification("Email", "The email can only contain up to 220 characters.");
+            }
+        }
+
+        if (String.IsNullOrWhiteSpace(Telephone))
+        {
+            this.AddNotification("Telephone", "Enter your telephone.");
+        }
+        else
+        {
+            if (!InformationValidationHelper.PhoneIsValid(Telephone))
+            {
+                this.AddNotification("Telephone", "Please provide valid telephone.");
             }
         }
 

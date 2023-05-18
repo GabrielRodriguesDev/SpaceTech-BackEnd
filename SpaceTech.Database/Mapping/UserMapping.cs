@@ -12,12 +12,14 @@ public class UserMapping : BaseMapping<User>, IMapping
         entity.Property(a => a.Surname).HasColumnType("varchar(220)");
         entity.Property(a => a.Email).HasColumnType("varchar(120)");
         entity.HasIndex(a => a.Email).HasDatabaseName("unq1_User").IsUnique();
-        
+        entity.Property(a => a.Telephone).HasColumnType("varchar(10)");
+
         #region Comments
         entity.Property(t => t.Name).HasComment("Name.");
         entity.Property(t => t.Surname).HasComment("Surname.");
         entity.Property(t => t.Email).HasComment("E-mail.");
         entity.Property(t => t.Password).HasComment("Password.");
+        entity.Property(t => t.Telephone).HasComment("Telephone.");
         #endregion
     }
 }
