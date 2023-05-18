@@ -14,5 +14,6 @@ public class ErrorCatalog
     #region Authentication
     public static string Login = "(SE0007)";
     public static string Logout = "(SE0008)";
+    public static string AccountVerification = "(SE0009)";
     #endregion
 }

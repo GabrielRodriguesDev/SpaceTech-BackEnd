@@ -1,4 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using SpaceTech.CrossCutting.Clients;
+using SpaceTech.Domain.Interfaces.Clients;
 using SpaceTech.Domain.Interfaces.Infrastructure;
 using SpaceTech.Domain.Interfaces.Services;
 using SpaceTech.Domain.Services;
@@ -12,5 +14,6 @@ public class ConfigureService
         services.AddScoped<IErrorManager, ErrorManager>();
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IAuthenticationService, AuthenticationService>();
+        services.AddScoped<ISMSClient, SMSClient>();
     }
 }

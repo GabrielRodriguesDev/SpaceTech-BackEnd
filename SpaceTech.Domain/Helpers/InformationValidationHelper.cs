@@ -52,7 +52,7 @@ public class InformationValidationHelper
 
     public static bool PhoneIsValid(string phoneNumber)
     {
-        string pattern = @"^\d{10}$";
+        string pattern = @"^\d{11}$";
         return Regex.IsMatch(phoneNumber, pattern);
     }
 

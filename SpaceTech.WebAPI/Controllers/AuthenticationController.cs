@@ -50,4 +50,35 @@ public class AuthenticationController : ControllerBase
         });
         return await tsc.Task;
     }
+
+
+    [HttpPost("AccountVerification")]
+    [AllowAnonymous]
+    public async Task<IActionResult> AccountVerification([FromServices] IAuthenticationService authenticationService, [FromBody] AccountVerificationCommand body, CancellationToken cancellationToken)
+    {
+        ErrorCatalogHelper.SettingCatalogedError(HttpContext, ErrorCatalog.AccountVerification);
+        var tsc = new TaskCompletionSource<IActionResult>();
+        var result = authenticationService.AccountVerification(body, cancellationToken);
+        CookieHelper.ClearCookie(Response);
+        tsc.SetResult(new JsonResult(result)
+        {
+            StatusCode = 200
+        });
+        return await tsc.Task;
+    }
+
+    [HttpPost("ChangePassword")]
+    [AllowAnonymous]
+    public async Task<IActionResult> ChangePassword([FromServices] IAuthenticationService authenticationService, [FromBody] ChangePasswordCommand body, CancellationToken cancellationToken)
+    {
+        ErrorCatalogHelper.SettingCatalogedError(HttpContext, ErrorCatalog.AccountVerification);
+        var tsc = new TaskCompletionSource<IActionResult>();
+        var result = authenticationService.ChangePassword(body, cancellationToken);
+        CookieHelper.ClearCookie(Response);
+        tsc.SetResult(new JsonResult(result)
+        {
+            StatusCode = 200
+        });
+        return await tsc.Task;
+    }
 }

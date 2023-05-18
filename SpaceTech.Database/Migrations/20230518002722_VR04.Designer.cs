@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SpaceTech.Database.Contexts;
 
@@ -10,9 +11,11 @@ using SpaceTech.Database.Contexts;
 namespace SpaceTech.Database.Migrations
 {
     [DbContext(typeof(SpaceTechContext))]
-    partial class SpaceTechContextModelSnapshot : ModelSnapshot
+    [Migration("20230518002722_VR04")]
+    partial class VR04
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -56,18 +59,11 @@ namespace SpaceTech.Database.Migrations
 
                     b.Property<string>("Telephone")
                         .IsRequired()
-                        .HasColumnType("varchar(11)")
+                        .HasColumnType("varchar(10)")
                         .HasComment("Telephone.");
 
                     b.Property<int>("UserType")
                         .HasColumnType("int");
-
-                    b.Property<string>("VerificationCode")
-                        .HasColumnType("varchar(5)")
-                        .HasComment("VerificationCode.");
-
-                    b.Property<DateTime?>("VerificationCodeExpiration")
-                        .HasColumnType("datetime(6)");
 
                     b.HasKey("Id");
 

@@ -10,6 +10,8 @@ public class User : BaseEntity
     public string Password { get; private set; } = null!;
     public UserType UserType { get; private set; }
     public string Telephone { get; private set; } = null!;
+    public string? VerificationCode { get; private set; }
+    public DateTime? VerificationCodeExpiration { get; private set; }
 
 
     public User() : base() { }
@@ -29,5 +31,18 @@ public class User : BaseEntity
         Surname = command.Surname!;
         Email = command.Email;
         Telephone = command.Telephone;
+    }
+
+    public void setVerificationCode(string verificationCode)
+    {
+        VerificationCode = verificationCode;
+        VerificationCodeExpiration = DateTime.UtcNow.AddMinutes(7);
+    }
+
+    public void setPassword(string password)
+    {
+        Password = BCrypt.Net.BCrypt.HashPassword(password);
+        VerificationCode = null;
+        VerificationCodeExpiration = null;
     }
 }
