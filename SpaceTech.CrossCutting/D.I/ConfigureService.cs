@@ -14,6 +14,10 @@ public class ConfigureService
         services.AddScoped<IErrorManager, ErrorManager>();
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IAuthenticationService, AuthenticationService>();
+        services.AddScoped<IUserConsumptionService, UserConsumptionService>();
+
+        #region Client
         services.AddScoped<ISMSClient, SMSClient>();
+        #endregion
     }
 }

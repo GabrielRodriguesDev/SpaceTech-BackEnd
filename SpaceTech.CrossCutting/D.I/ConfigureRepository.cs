@@ -19,5 +19,6 @@ public class ConfigureRepository
         #endregion
 
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IUserConsumptionRepository, UserConsumptionRepository>();
     }
 }
