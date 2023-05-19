@@ -9,7 +9,7 @@ public class SMSClient : ISMSClient
     public GenericCommandResult SendVerificationCode(string phoneNumber, string verificationCode)
     {
         string accountSid = "ACfd0d7a94006773db29a04af543bb21f9";
-        string authToken = "bf4b659311cac9d05eeab1316c79b815";
+        string authToken = "d945de0a6650231a8c5248d1b71bc151";
         string twilioPhoneNumber = "+12526595377";
 
         try
