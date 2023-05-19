@@ -1,10 +1,13 @@
 ﻿using SpaceTech.Domain.Notifications;
+using System.Text.Json.Serialization;
 
 namespace SpaceTech.Domain.Commands.UserConsumption;
 public class CreateUserConsumptionCommand : Notificable
 {
     public Guid? UserId { get; set; }
     public string? Url { get; set; }
+    [JsonIgnore]
+    public string? ConsumedAPI { get; set; }
 
     public override void Validate()
     {

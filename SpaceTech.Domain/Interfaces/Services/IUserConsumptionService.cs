@@ -4,5 +4,5 @@ using SpaceTech.Domain.Commands.UserConsumption;
 namespace SpaceTech.Domain.Interfaces.Services;
 public interface IUserConsumptionService
 {
-    GenericCommandResult Create(CreateUserConsumptionCommand command);
+    GenericCommandResult Create(CreateUserConsumptionCommand command, CancellationToken cancellationToken);
 }

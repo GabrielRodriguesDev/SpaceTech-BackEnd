@@ -71,7 +71,7 @@ public class AuthenticationController : ControllerBase
     [AllowAnonymous]
     public async Task<IActionResult> ChangePassword([FromServices] IAuthenticationService authenticationService, [FromBody] ChangePasswordCommand body, CancellationToken cancellationToken)
     {
-        ErrorCatalogHelper.SettingCatalogedError(HttpContext, ErrorCatalog.AccountVerification);
+        ErrorCatalogHelper.SettingCatalogedError(HttpContext, ErrorCatalog.ChangePassword);
         var tsc = new TaskCompletionSource<IActionResult>();
         var result = authenticationService.ChangePassword(body, cancellationToken);
         CookieHelper.ClearCookie(Response);
