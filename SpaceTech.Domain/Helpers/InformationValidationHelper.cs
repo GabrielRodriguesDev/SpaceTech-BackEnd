@@ -26,25 +26,25 @@ public class InformationValidationHelper
             result = result.TrimStart() + " Password must contain a minimum of 8 characters and a maximum of 16.";
         }
 
-        if (!hasLowerChar.IsMatch(password))
-        {
-            result = result.TrimStart() + "@Password should contain at least one lower case letter.";
-        }
+        //if (!hasLowerChar.IsMatch(password))
+        //{
+        //    result = result.TrimStart() + "@Password should contain at least one lower case letter.";
+        //}
 
-        if (!hasUpperChar.IsMatch(password))
-        {
-            result = result.TrimStart() + "@Password should contain at least one upper case letter.";
-        }
+        //if (!hasUpperChar.IsMatch(password))
+        //{
+        //    result = result.TrimStart() + "@Password should contain at least one upper case letter.";
+        //}
 
-        if (!hasNumber.IsMatch(password))
-        {
-            result = result.TrimStart() + "@Password should contain at least one numeric value.";
-        }
+        //if (!hasNumber.IsMatch(password))
+        //{
+        //    result = result.TrimStart() + "@Password should contain at least one numeric value.";
+        //}
 
-        if (!hasSymbols.IsMatch(password))
-        {
-            result = result.TrimStart() + "@Password should contain at least one special case characters.";
-        }
+        //if (!hasSymbols.IsMatch(password))
+        //{
+        //    result = result.TrimStart() + "@Password should contain at least one special case characters.";
+        //}
 
 
         return result;
