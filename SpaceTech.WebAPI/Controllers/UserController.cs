@@ -70,7 +70,7 @@ public class UserController : ControllerBase
 
     [HttpPost]
     [Route("Search")]
-    [Authorize(Roles = nameof(UserType.Administrator))]
+    //[Authorize(Roles = nameof(UserType.Administrator))]
     public async Task<IActionResult> Search([FromServices] IUserRepository repository, [FromBody] SearchParams searchParams, CancellationToken cancellationToken)
     {
         ErrorCatalogHelper.SettingCatalogedError(HttpContext, ErrorCatalog.SearchUser);
