@@ -10,4 +10,6 @@ public class UserListResult
     public string Surname { get; set; } = null!;
     [Search]
     public string Email { get; set; } = null!;
+
+    public string Telephone { get;  set; } = null!;
 }
