@@ -3,6 +3,7 @@
 namespace SpaceTech.Domain.Queries.Result;
 public class UserListResult
 {
+    public Guid Id { get; set; }
     [Search]
     public string Name { get; set; } = null!;
     [Search]
