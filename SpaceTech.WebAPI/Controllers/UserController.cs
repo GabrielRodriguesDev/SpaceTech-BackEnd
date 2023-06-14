@@ -91,7 +91,7 @@ public class UserController : ControllerBase
 
     [HttpDelete]
     [Route("{id}")]
-    [Authorize(Roles = nameof(UserType.Administrator))]
+    ///[Authorize(Roles = nameof(UserType.Administrator))]
     public async Task<IActionResult> Delete([FromServices] IUserService service, [FromRoute] Guid id, CancellationToken cancellationToken)
     {
         ErrorCatalogHelper.SettingCatalogedError(HttpContext, ErrorCatalog.DeleteUser);
