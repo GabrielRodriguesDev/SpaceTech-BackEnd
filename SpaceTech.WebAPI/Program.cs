@@ -9,6 +9,16 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(builder =>
+    {
+        builder.AllowAnyOrigin()
+               .AllowAnyMethod()
+               .AllowAnyHeader();
+    });
+});
+
 #region Environment variables
 Environment.SetEnvironmentVariable("Connection_db", builder.Configuration["ConnectionStrings:Connection_db"]);
 #endregion
@@ -54,6 +64,8 @@ builder.Services.AddAuthentication(options =>
 #endregion
 
 var app = builder.Build();
+
+app.UseCors();
 
 app.UseSwagger();
 
